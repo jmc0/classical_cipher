@@ -93,7 +93,6 @@ def index_of_coincidence(text):
         index_of_coincidence: float
     """
     letter_and_freq_sorted = count_letter_frequency(text)
-    print(letter_and_freq_sorted)
     ic = 0
     for item in letter_and_freq_sorted:
         ic += item[1] * (item[1] - 1)
@@ -127,3 +126,56 @@ def get_single_key_and_mutual_ic(letter_and_per_sorted):
             best_single_key = i
     return [best_single_key, best_mutual_ic]
 
+
+def Friedman(cipher):
+    """
+    TO DO
+    cal the possible length of keys by Friedman Algorithm.
+
+    Args:
+        cipher: string
+
+    Return:
+        key_len: int
+    """
+    key_len = 1
+    flag = 1
+    IC_THRE = 0.6
+    average_ic = 0
+    max_average_ic = 0
+    possible_key_len = []
+    while key_len < LENGTH_OF_ALPHABET:
+        group_cipher = get_group_of_cipher(cipher, key_len)
+        for g_cipher in group_cipher:
+            ic = index_of_coincidence(g_cipher)
+            average_ic += ic
+        average_ic /= len(group_cipher)
+        if average_ic > IC_OF_ENGLISH:
+            possible_key_len.append(key_len)
+        key_len += 1
+        average_ic = 0
+    return possible_key_len
+
+def get_group_of_cipher(cipher, key_len):
+    """
+    divide cipher into ken_len groups
+
+    Args:
+        key_len: int
+        cipher: string
+
+    Return:
+        List: each item is a string
+    """
+    if key_len <= 0 or key_len > LENGTH_OF_ALPHABET:
+        raise ValueError('the length of key should > 0 and < 26')
+    clean_cipher = ''
+    for c in cipher:
+        if c.lower() in ALPHABET:
+            clean_cipher += c
+    cipher_group = [''] * key_len
+    idx = 0
+    while idx < len(clean_cipher):
+        cipher_group[(idx) % key_len] += clean_cipher[idx]
+        idx += 1
+    return cipher_group
