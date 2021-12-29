@@ -1,4 +1,4 @@
-from caesar import caesar_encode, caesar_decode
+from caesar_cipher import caesar_encode, caesar_decode
 
 
 def test_caesar():
