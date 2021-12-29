@@ -1,7 +1,7 @@
 from __future__ import division
 import string
 
-ALPHABET = string.ascii_lowercase
+ALPHABET = string.ascii_letters
 LENGTH_OF_ALPHABET = 26
 IC_OF_ENGLISH = 0.06
 IC_OF_ENGLISH_VIGENERE_GROUP = 0.05
