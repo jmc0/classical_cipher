@@ -1,11 +1,3 @@
-#! /usr/bin/env python3
-# -*- coding: utf-8 -*-
-# vim:fenc=utf-8
-#
-# Copyright ©  2021-10-05 00:09 bucktoothsir <rsliu.xd@gmail.com>
-#
-# Distributed under terms of the MIT license.
-
 """
 Caesar cipher.
 """
@@ -33,7 +25,7 @@ def caesar_encode(plaintext: str, key: int) -> str:
     return ciphertext
 
 
-def caesar_decode(ciphertext, key=None):
+def caesar_decode(ciphertext: str, key: int = None) -> str:
     if not key:
         letter_and_per_sorted = count_letter_percentage(ciphertext)
         key, best_mutual_ic = get_single_key_and_mutual_ic(letter_and_per_sorted)
