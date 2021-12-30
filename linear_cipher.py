@@ -6,8 +6,9 @@ import argparse
 import math
 from utils import IDX_TO_CHAR, CHAR_TO_IDX, LENGTH_OF_ALPHABET, ALPHABET
 
+
 def linear_encode(plaintext: str, a: int, b: int) -> str:
-    if(math.gcd(26,a) != 1):
+    if(math.gcd(26, a) != 1):
         raise ValueError("Bad Key.")
     ciphertext = ''
     for c in plaintext:
@@ -22,10 +23,11 @@ def linear_encode(plaintext: str, a: int, b: int) -> str:
         ciphertext += c
     return ciphertext
 
+
 def linear_decode(ciphertext: str, a: int, b: int) -> str:
-    if(math.gcd(26,a) !=1):
+    if(math.gcd(26, a) != 1):
         raise ValueError("Bad Key.")
-    inv = pow(a,-1,26)
+    inv = pow(a, -1, 26)
     plaintext = ''
     for c in ciphertext:
         upper = 0
@@ -50,12 +52,12 @@ if __name__ == "__main__":
     if args.plaintext:
         if args.a and args.b:
             print("The plaintext is: \"{}\".".format(args.plaintext))
-            print("a is: {} b is: {}.".format(args.a,args.b))
-            ciphertext = linear_encode(args.plaintext, args.a,args.b)
+            print("a is: {} b is: {}.".format(args.a, args.b))
+            ciphertext = linear_encode(args.plaintext, args.a, args.b)
             print("The ciphertext is : \"{}\".".format(ciphertext))
-    if args.ciphertext:    
+    if args.ciphertext:
         if args.a and args.b:
             print("The ciphertext is: \"{}\".".format(args.ciphertext))
-            print("a is: {} b is: {}.".format(args.a,args.b))
-            plaintext = linear_decode(args.ciphertext, args.a,args.b)
+            print("a is: {} b is: {}.".format(args.a, args.b))
+            plaintext = linear_decode(args.ciphertext, args.a, args.b)
             print("The plaintext is : \"{}\".".format(plaintext))
