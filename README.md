@@ -6,8 +6,8 @@ Classical Cipher decoder and encoder.
 
 
 ## Requirements
-1.python==3.9.2
-2.pytest==6.2.5
+1. python==3.9.2
+2. pytest==6.2.5
 
 ## Run
 ### Caesar
