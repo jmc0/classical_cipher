@@ -39,8 +39,13 @@ jobs:
         run: |
           python -m pip install --upgrade pip
       - name: Install plugin
-        run: pip install pytest-github-actions-annotate-failures
+        run: |
+          pip install pytest-github-actions-annotate-failures
+          pip install wemake-python-styleguide
       - name: Test with pytest
         run: pytest
-      - name: Run flake8 on your PR - with annotations!
-        uses: tayfun/flake8-your-pr@1.0.1
+      - name: Wemake Python Stylguide
+        uses: wemake-services/wemake-python-styleguide@0.16.0
+        continue-on-error: true
+        with:
+          reporter: 'github-pr-review'
