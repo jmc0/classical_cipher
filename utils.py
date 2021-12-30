@@ -37,7 +37,7 @@ LETTER_FREQUENCIES_OF_ENGLISH = {
     }
 
 
-def count_letter_frequency(text):
+def count_letter_frequency(text: str) -> list:
     """Count the frequency of each letter in the input text
 
     Args:
@@ -52,11 +52,11 @@ def count_letter_frequency(text):
         if c in ALPHABET:
             letter_to_freq[c] += 1
 
-    letter_and_freq_sorted = sorted(letter_to_freq.items(), key=lambda a:(-a[1],a[0]))
+    letter_and_freq_sorted = sorted(letter_to_freq.items(), key=lambda a: (-a[1], a[0]))
     return letter_and_freq_sorted
 
 
-def count_letter_percentage(text):
+def count_letter_percentage(text: str) -> list:
     """Count the frequency percentage of each letter in the input text
 
     Args:
@@ -66,23 +66,24 @@ def count_letter_percentage(text):
         A List containing items(letter(lower_case), percentage), sorting by the percentage in the descending order.
         [('d', 0.08), ('x', 0.16), ...]
     """
-    letter_and_freq_sorted = count_letter_frequency(text)
     letter_to_per = dict(zip(ALPHABET, [0]*LENGTH_OF_ALPHABET))
     all_num_of_char = 0
+    for c in text:
+        c = c.lower()
+        if c in ALPHABET:
+            letter_to_per[c] += 1
+            all_num_of_char += 1
 
-    for item in letter_and_freq_sorted:
-        all_num_of_char += item[1]
-    for item in letter_and_freq_sorted:
-        letter, freq = item
-        letter_to_per[letter] = freq / all_num_of_char
-    letter_and_per_sorted = sorted(letter_to_per.items(), key=lambda a:(-a[1],a[0]))
+    for c in letter_to_per.keys():
+        letter_to_per[c] /= all_num_of_char
+    letter_and_per_sorted = sorted(letter_to_per.items(), key=lambda a: (-a[1], a[0]))
     return letter_and_per_sorted
 
 
-def index_of_coincidence(text):
+def index_of_coincidence(text: str) -> float:
     """cal the IC of test
 
-       IC = \sigma_{i=A}^{i=Z} count_i * (count_i - 1) / N * (N - 1))
+       IC = sigma_{i=A}^{i=Z} count_i * (count_i - 1) / N * (N - 1))
 
        N is the length of letters(a-z) in the text
 
@@ -103,31 +104,30 @@ def index_of_coincidence(text):
     ic /= n * (n - 1)
     return ic
 
-def get_single_key_and_mutual_ic(letter_and_per_sorted):
+
+def get_possible_single_keys(letter_and_per_sorted: list, k: int) -> list:
     """
-    Return best key with the max mutual ic.
-    For the Caecar cipher, the possible key in the range of [0, 25]
+    Return the first k possible keys sorting by mutual ic.
+    For the Caecar cipher, k = 1.
 
     Args:
         letter_and_per_sorted: A List containing items(letter(lower_case), percentage), sorting by the percentage in the descending order.
     Return:
         A list containing [best_key(int), best_mutual_ic(float)]
     """
-    #key_to_mutual_ic = dict(zip(range(1, LENGTH_OF_ALPHABET), [0]*LENGTH_OF_ALPHABET))
-    best_single_key = ''
-    best_mutual_ic = 0
+    key_to_mutual_ic = dict(zip(range(1, LENGTH_OF_ALPHABET), [0]*LENGTH_OF_ALPHABET))
     for i in range(1, LENGTH_OF_ALPHABET):
         mutual_ic = 0
         for item in letter_and_per_sorted:
             letter, per = item
             mutual_ic += LETTER_FREQUENCIES_OF_ENGLISH[IDX_TO_CHAR[(CHAR_TO_IDX[letter] - i) % LENGTH_OF_ALPHABET]] * per
-        if best_mutual_ic < mutual_ic:
-            best_mutual_ic = mutual_ic
-            best_single_key = i
-    return [best_single_key, best_mutual_ic]
+        key_to_mutual_ic[i] = mutual_ic
+    key_mutual_ic_sorted = sorted(key_to_mutual_ic.items(), key=lambda a: (-a[1], a[0]))
+    possible_keys = [item[0] for item in key_mutual_ic_sorted[:k]]
+    return possible_keys
 
 
-def Friedman(cipher):
+def Friedman(cipher: str) -> int:
     """
     TO DO
     cal the possible length of keys by Friedman Algorithm.
@@ -156,7 +156,8 @@ def Friedman(cipher):
         average_ic = 0
     return possible_key_len
 
-def get_group_of_cipher(cipher, key_len):
+
+def get_group_of_cipher(cipher: str, key_len: int) -> list[str]:
     """
     divide cipher into ken_len groups
 
