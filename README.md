@@ -31,3 +31,10 @@ python linear_cipher.py -p "If he had anything confidential to say." -a 3 -b 1
 python linear_cipher.py -c "Zq wn wbk bovgwzot hroqzknogzbi gr dbv." -a 3 -b 1
 
 ```
+
+## Test
+```shell
+# Test linear encoding
+pytest tests/test_linear.py
+
+```
