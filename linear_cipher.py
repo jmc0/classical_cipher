@@ -1,5 +1,5 @@
 """
-Caesar cipher.
+Linear cipher.
 """
 
 import argparse
