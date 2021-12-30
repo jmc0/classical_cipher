@@ -65,19 +65,4 @@ pytest tests/test_caesar.py
 pytest tests/test_vigenere.py
 ```
 
-### Linear
-```shell
-# Linear encoding (C=a*P+b(mod 26))
-python linear_cipher.py -p "If he had anything confidential to say." -a 3 -b 1
 
-# Linear decoding with key
-python linear_cipher.py -c "Zq wn wbk bovgwzot hroqzknogzbi gr dbv." -a 3 -b 1
-
-```
-
-## Test
-```shell
-# Test linear encoding
-pytest tests/test_linear.py
-
-```
