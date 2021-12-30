@@ -42,3 +42,5 @@ jobs:
         run: pip install pytest-github-actions-annotate-failures
       - name: Test with pytest
         run: pytest
+      - name: Run flake8 on your PR - with annotations!
+        uses: tayfun/flake8-your-pr@1.0.1
