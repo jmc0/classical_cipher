@@ -28,7 +28,7 @@ python caesar_cipher.py -c 'Pm ol ohk hufaopun jvumpkluaphs av zhf.'
 python caesar_cipher.py -cf ciphertext.txt
 ```
 
-### Caesar
+### Linear
 ```shell
 # Linear encoding (C=a*P+b(mod 26))
 python linear_cipher.py -p "If he had anything confidential to say." -a 3 -b 1
