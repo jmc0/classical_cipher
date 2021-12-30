@@ -4,12 +4,11 @@ Linear cipher.
 
 import argparse
 import math
-from utils import count_letter_percentage, get_single_key_and_mutual_ic
 from utils import IDX_TO_CHAR, CHAR_TO_IDX, LENGTH_OF_ALPHABET, ALPHABET
 
 def linear_encode(plaintext: str, a: int, b: int) -> str:
-    if(math.gcd(26,a)!=1):
-        return("BAD KEY")
+    if(math.gcd(26,a) != 1):
+        raise ValueError("Bad Key.")
     ciphertext = ''
     for c in plaintext:
         upper = 0
@@ -17,18 +16,16 @@ def linear_encode(plaintext: str, a: int, b: int) -> str:
             if c.isupper():
                 upper = 1
                 c = c.lower()
-            c = IDX_TO_CHAR[(a*CHAR_TO_IDX[c] + b) % LENGTH_OF_ALPHABET]
+            c = IDX_TO_CHAR[(a * CHAR_TO_IDX[c] + b) % LENGTH_OF_ALPHABET]
             if upper:
                 c = c.upper()
-            ciphertext += c
-        else:
-            ciphertext += c
+        ciphertext += c
     return ciphertext
 
-def linear_decode(ciphertext, a,b):
-    if(math.gcd(26,a)!=1):
-        return("BAD KEY")
-    inv=pow(a,-1,26)
+def linear_decode(ciphertext: str, a: int, b: int) -> str:
+    if(math.gcd(26,a) !=1):
+        raise ValueError("Bad Key.")
+    inv = pow(a,-1,26)
     plaintext = ''
     for c in ciphertext:
         upper = 0
@@ -36,13 +33,12 @@ def linear_decode(ciphertext, a,b):
             if c.isupper():
                 upper = 1
                 c = c.lower()
-            c = IDX_TO_CHAR[inv*(CHAR_TO_IDX[c] - b) % LENGTH_OF_ALPHABET]
+            c = IDX_TO_CHAR[inv * (CHAR_TO_IDX[c] - b) % LENGTH_OF_ALPHABET]
             if upper:
                 c = c.upper()
-            plaintext += c
-        else:
-            plaintext += c
+        plaintext += c
     return plaintext
+
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
